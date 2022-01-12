@@ -1,0 +1,185 @@
+# -*- org-src-preserve-indentation: t; org-edit-src-content: 0; -*-
+#+TITLE: Generate Features from Audio Files
+* Virtualenv Setup
+:PROPERTIES:
+:header-args: :python /home/sga/data/mir/venv/bin/python :session S1 :results output :exports both
+:END:
+
+#+begin_src python
+import numpy as np
+import librosa
+
+y, sr = librosa.load('../gtzan/Data/genres/hiphop/hiphop.00000.wav')
+print(np.shape(y))
+audio_file, _ = librosa.effects.trim(y)
+print("Trimmed audio file shape:", np.shape(audio_file))
+#+end_src
+
+#+RESULTS:
+: (661504,)
+: Trimmed audio file shape: (661504,)
+
+#+begin_src python
+mean_var = lambda x: (np.mean(x, 0), np.var(x, 0))
+
+#+end_src
+
+#+RESULTS:
+
+What we want, is a function that basically extracts the following features from a given audio file:
++ Zero Crossing Rate
+  #+begin_src python
+zero_crossings = librosa.zero_crossings(audio_file, pad=False)
+print("Mean", np.mean(zero_crossings, 0), "Var", np.var(zero_crossings, 0))
+
+  #+end_src
+
+  #+RESULTS:
+  : Mean 0.14758489744582043 Var 0.12580359549172712
+
++ Harmonics and Perceptrual
+  #+begin_src python
+harm, perc = librosa.effects.hpss(audio_file)
+print("Harmony", mean_var(harm), "Perceptrual", mean_var(perc))
+
+  #+end_src
+
+  #+RESULTS:
+  : Harmony (-0.01527371, 0.004693321) Perceptrual (-0.0024433958, 0.008693793)
+
++ Tempo
+  #+begin_src python
+tempo, _ = librosa.beat.beat_track(audio_file, sr=sr)
+print("Tempo", tempo)
+  #+end_src
+
+  #+RESULTS:
+  : Tempo 117.45383522727273
+
++ Spectral Centroid
+  #+begin_src python
+spec_centr = librosa.feature.spectral_centroid(audio_file, sr=sr)[0]
+print("Spectral centroid", mean_var(spec_centr))
+
+  #+end_src
+
+  #+RESULTS:
+  : Spectral centroid (2667.9405023911695, 418523.00328023604)
+
++ Spectral Bandwith
+  #+begin_src python
+spec_bw = librosa.feature.spectral_bandwidth(audio_file, sr=sr)[0]
+print("Spectral Bandwidth", mean_var(spec_bw))
+
+  #+end_src
+
+  #+RESULTS:
+  : Spectral Bandwidth (2351.1607441175047, 107829.33277829336)
+
++ Spectral Rolloff
+  #+begin_src python
+spec_rolloff = librosa.feature.spectral_rolloff(audio_file, sr=sr)[0]
+print("Spectral Rolloff", mean_var(spec_rolloff))
+
+  #+end_src
+
+  #+RESULTS:
+  : Spectral Rolloff (5475.312341393562, 1564158.3836087245)
+
++ MFCCs
+  #+begin_src python
+mfccs = librosa.feature.mfcc(audio_file, sr=sr)
+for i,x in enumerate(mfccs):
+    print(f"MFCC{i+1}: {mean_var(x)}")
+  #+end_src
+
+  #+RESULTS:
+  #+begin_example
+  MFCC1: (-80.8922, 4879.21)
+  MFCC2: (84.78208, 750.5294)
+  MFCC3: (-31.548029, 548.87744)
+  MFCC4: (33.90531, 407.26343)
+  MFCC5: (-19.848919, 158.7703)
+  MFCC6: (23.558884, 135.45528)
+  MFCC7: (-22.148758, 93.80207)
+  MFCC8: (20.026226, 96.63302)
+  MFCC9: (-16.781036, 93.6565)
+  MFCC10: (19.216515, 55.804417)
+  MFCC11: (-13.114045, 75.106186)
+  MFCC12: (11.498654, 52.465946)
+  MFCC13: (-10.7295685, 73.96624)
+  MFCC14: (10.5818615, 72.03243)
+  MFCC15: (-8.424021, 64.873886)
+  MFCC16: (7.3235083, 55.406578)
+  MFCC17: (-5.3776746, 69.422)
+  MFCC18: (7.692775, 62.19795)
+  MFCC19: (-5.5530353, 63.344887)
+  MFCC20: (1.5160924, 41.07229)
+  #+end_example
+
++ RMS
+  #+begin_src python
+rms = librosa.feature.rms(audio_file)
+print("RMS", mean_var(np.squeeze(rms)))
+
+  #+end_src
+
+  #+RESULTS:
+  : RMS (0.12527473, 0.002464796)
+
++ Chroma SFT
+  #+begin_src python
+hl = 5000
+chromagram = librosa.feature.chroma_stft(audio_file, sr=sr, hop_length=hl)
+print("Chroma SFT", mean_var(np.squeeze(chromagram.reshape((1,-1)))))
+
+  #+end_src
+
+  #+RESULTS:
+  : Chroma SFT (0.45923755, 0.08279893)
+
+So, we have found equivalents for all features, so lets put everything together in a function:
+#+begin_src python
+def features(audio,sr, hl=5000):
+   mean_var = lambda x: [np.mean(x, 0), np.var(x, 0)]
+
+   length = np.shape(audio)[0]
+
+   _chroma_stft = librosa.feature.chroma_stft(audio,sr=sr, hop_length=hl)
+   chroma_stft = np.squeeze(chromagram.reshape((1,-1)))
+
+   rms = np.squeeze(librosa.feature.rms(audio))
+
+   spec_centr = librosa.feature.spectral_centroid(audio, sr=sr)[0]
+   spec_bw = librosa.feature.spectral_bandwidth(audio, sr=sr)[0]
+   spec_rolloff = librosa.feature.spectral_rolloff(audio, sr=sr)[0]
+
+   zcr = librosa.zero_crossings(audio, pad=False)
+
+   harm, perc = librosa.effects.hpss(audio)
+   tempo, _ = librosa.beat.beat_track(audio, sr=sr)
+
+   feature_list = [length]
+   for x in [chroma_stft, rms, spec_centr, spec_bw, spec_rolloff, zcr, harm, perc]:
+      feature_list = feature_list + mean_var(x)
+
+   feature_list.append(tempo)
+
+   for x in librosa.feature.mfcc(audio, sr=sr):
+      feature_list = feature_list + mean_var(x)
+
+   return feature_list
+
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python
+feat = features(audio_file, sr)
+print(feat)
+print(len(feat))
+#+end_src
+
+#+RESULTS:
+: [661504, 0.45923755, 0.08279893, 0.12527473, 0.002464796, 2667.9405023911695, 418523.00328023604, 2351.1607441175047, 107829.33277829336, 5475.312341393562, 1564158.3836087245, 0.14758489744582043, 0.12580359549172712, -0.01527371, 0.004693321, -0.0024433958, 0.008693793, 117.45383522727273, -80.8922, 4879.21, 84.78208, 750.5294, -31.548029, 548.87744, 33.90531, 407.26343, -19.848919, 158.7703, 23.558884, 135.45528, -22.148758, 93.80207, 20.026226, 96.63302, -16.781036, 93.6565, 19.216515, 55.804417, -13.114045, 75.106186, 11.498654, 52.465946, -10.7295685, 73.96624, 10.5818615, 72.03243, -8.424021, 64.873886, 7.3235083, 55.406578, -5.3776746, 69.422, 7.692775, 62.19795, -5.5530353, 63.344887, 1.5160924, 41.07229]
+: 58
