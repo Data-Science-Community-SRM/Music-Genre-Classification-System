@@ -110,7 +110,7 @@ Kruthi M
 Shashwat Ganesh
 
 <p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/s.jpeg"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
+<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/s.jpeg"  height="120" alt="Shashwat Ganesh">
 </p>
 <p align="center">
 <a href = "https://github.com/kknives"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
@@ -128,7 +128,7 @@ Shashwat Ganesh
 Anushree Bajaj
 
 <p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/a.jpg"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
+<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/a.jpg"  height="120" alt="Anushree Bajaj">
 </p>
 <p align="center">
 <a href = "https://github.com/condescendo"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
@@ -162,7 +162,7 @@ Jahnavi Darbhamulla
 Rayaan Faiz
 
 <p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/r.jpg"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
+<img src = "https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/r.jpg"  height="120" alt="Rayaan Faiz">
 </p>
 <p align="center">
 <a href = "https://github.com/RayaanFaiz14"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
