@@ -69,19 +69,18 @@ The basic project architechture is given below:
 ## Instructions to run
 
 * Pre-requisites:
-	-  < insert pre-requisite >
-	-  < insert pre-requisite >
+	```bash
+	conda env create -f environment.yml 
+	```
+	```bash
+      conda activate {Environment_Name} 
+	```
 
-* < directions to install > 
-```bash
-< insert code >
-```
+* Directions to run Flask Server 
+	```bash
+ 	python app.py 
+	```
 
-* < directions to execute >
-
-```bash
-< insert code >
-```
 
 ## Contributors
 
