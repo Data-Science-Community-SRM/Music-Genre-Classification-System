@@ -1,0 +1,44 @@
+#+TITLE: Given the Genre Predictions for a Song, select the most appropriate ones
+
+* Statistics
+    :PROPERTIES:
+    :header-args: :python /home/sga/data/mir/venv/bin/python :session S1 :results output :exports both
+    :END:
+    #+begin_src python
+import numpy as np
+import librosa
+
+y, sr = librosa.load('../gtzan/Data/genres/hiphop/hiphop.00000.wav')
+print(np.shape(y))
+audio_file, _ = librosa.effects.trim(y)
+print("Trimmed audio file shape:", np.shape(audio_file))
+    #+end_src
+
+    #+RESULTS:
+    : (661504,)
+    : Trimmed audio file shape: (661504,)
+
+    Now, we need to slice this into n slices
+    #+begin_src python
+duration = y.shape[0]/sr
+splits = np.split(y, np.arange(1,5)*(int(duration/5)*sr))
+for x in splits:
+    print(x.shape)
+    #+end_src
+
+    #+RESULTS:
+    : (132300,)
+    : (132300,)
+    : (132300,)
+    : (132300,)
+    : (132304,)
+
+    Seems promising. But now, let's collect the results and take out the genres we think should be selected
+    #+begin_src python
+sample_genres = np.random.randint(1, 10, size=10)
+print(np.array([-1,0,1])*np.std(sample_genres) + np.mean(sample_genres))
+
+    #+end_src
+
+    #+RESULTS:
+    : [2.3786528 5.2       8.0213472]
