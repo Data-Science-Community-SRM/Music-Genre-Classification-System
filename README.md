@@ -1,103 +1,63 @@
-<p align="center">
-<a href="https://dscommunity.in">
-	<img src="https://github.com/Data-Science-Community-SRM/template/blob/master/Header.png?raw=true" width=80%/>
-</a>
-	<h2 align="center"> < Insert Project Title Here > </h2>
-	<h4 align="center"> < Insert Project Description Here > <h4>
-</p>
+# Music Genre Classification
 
----
-[![DOCS](https://img.shields.io/badge/Documentation-see%20docs-green?style=flat-square&logo=appveyor)](INSERT_LINK_FOR_DOCS_HERE) 
-  [![UI ](https://img.shields.io/badge/User%20Interface-Link%20to%20UI-orange?style=flat-square&logo=appveyor)](INSERT_UI_LINK_HERE)
+This repository contains the code for a music genre classifier written in Python using Tensorflow and Flask. 
+You can try it out for yourself on [Heroku](https://music-clf.herokuapp.com/), though be warned that it might 
+fail for large files due to the computational limits of Heroku.
 
-## Preview
-- Add pictures or important highlights from the Project (if any)
-## Functionalities
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
-- [ ]  < insert functionality >
+This project was inspired by the [FMA dataset](https://github.com/mdeff/fma), though due to 
+technical issues with this dataset I decided to instead use the [GTZAN](http://marsyas.info/downloads/datasets.html) dataset.
 
-<br>
+The model works by starting with a song and splitting it up into ten small chunks. Each chunk is then processed by extracting mel-frequency cepstral coefficients (MFCCs) over many tiny segments, producing an image like the one below:
 
+![MFCC's for a song coming from the rock genre](./rock_mfcc.jpg)
 
-## Instructions to run
+The genre is then predicted using a convolutional neural network, a typical architecture suitable for image-like data such as this.
 
-* Pre-requisites:
-	-  < insert pre-requisite >
-	-  < insert pre-requisite >
+# Usage
 
-* < directions to install > 
-```bash
-< insert code >
-```
+Follow these steps if you wish to try out the code on your own machine.
 
-* < directions to execute >
+## Environment Setup
 
-```bash
-< insert code >
-```
+Install the prerequisites by creating a new anaconda environment:
 
-## Contributors
+	conda env create -f environment.yml
+	conda activate genre_rec
 
-<table>
-<tr align="center">
+## Start the Flask server
 
+If you want to test the server functionality with just a local flask server, follow these steps. Run the server:
 
-<td>
+	python app.py
 
-John Doe
+Then visit `localhost:5000` in your web browser.
 
-<p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/template/blob/master/logo-light.png?raw=true"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
-</p>
-<p align="center">
-<a href = "https://github.com/person1"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
-<a href = "https://www.linkedin.com/in/person1">
-<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36"/>
-</a>
-</p>
-</td>
+## Model Creation
 
+If you wish to recreate the training process, first download the GTZAN dataset and refer to the steps below.
 
-<td>
+### Preprocessing
 
-John Doe
+Once you have downloaded the GTZAN dataset, run the preprocessing script:
 
-<p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/template/blob/master/logo-light.png?raw=true"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
-</p>
-<p align="center">
-<a href = "https://github.com/person2"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
-<a href = "https://www.linkedin.com/in/person2">
-<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36"/>
-</a>
-</p>
-</td>
+	python classifier/preprocess.py
 
+This script will extract MFCCs (mel-frequency cepstral coefficients) from the `.wav` files and store the 
+data and labels in a `.json` file.
 
+### Training
 
-<td>
+You can view available models to train in the `models.py` file.
+Currently there is logistic regression and a convolutional neural network avialable to train.
+Modify the model creation section in `train.py` and run
 
-John Doe
+	python classifier/train.py
 
-<p align="center">
-<img src = "https://github.com/Data-Science-Community-SRM/template/blob/master/logo-light.png?raw=true"  height="120" alt="Your Name Here (Insert Your Image Link In Src">
-</p>
-<p align="center">
-<a href = "https://github.com/person3"><img src = "http://www.iconninja.com/files/241/825/211/round-collaboration-social-github-code-circle-network-icon.svg" width="36" height = "36"/></a>
-<a href = "https://www.linkedin.com/in/person3">
-<img src = "http://www.iconninja.com/files/863/607/751/network-linkedin-social-connection-circular-circle-media-icon.svg" width="36" height="36"/>
-</a>
-</p>
-</td>
-</tr>
-  </table>
-  
-## License
-[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+which will give you a model summary, training information, and evaluation diagnostics. 
 
-<p align="center">
-	Made with :heart: by <a href="https://dscommunity.in">DS Community SRM</a>
-</p>
+# Roadmap
 
+- [x] Refactor code into scripts
+- [x] Get Flask server working
+- [x] Ping server with client
+- [x] Deploy to Heroku
