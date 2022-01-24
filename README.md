@@ -3,7 +3,8 @@
 	<img src="https://github.com/Data-Science-Community-SRM/template/blob/master/Header.png?raw=true" width=80%/>
 </a>
 	<h2 align="center"> Genrify - The Music App </h2>
-	<h4 align="center"> In this work, the objective is to classify the audio data into specific genres from GTZAN dataset which contain about 10 genres. We have build a Convolutional Neural Network model using the tensorflow library to classify the 10 genres.  <h4>
+	<h3 align="center"> Hear it. Genrify it. </h3>
+<h4 align="center"> In this work, the objective is to classify the audio data into specific genres from GTZAN dataset which contain about 10 genres. We have build a Convolutional Neural Network model using the tensorflow library to classify the 10 genres.  <h4>
 </p>
 
 ---
