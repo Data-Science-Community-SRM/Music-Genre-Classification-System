@@ -4,7 +4,7 @@
 </a>
 	<h2 align="center"> Genrify - The Music App </h2>
 	<h3 align="center"> Hear it. Genrify it. </h3>
-<h4 align="center"> In this work, the objective is to classify the audio data into specific genres from GTZAN dataset which contain about 10 genres. We have build a Convolutional Neural Network model using the tensorflow library to classify the 10 genres.  <h4>
+<h4 align="center"> In this work, the objective is to classify the audio data into specific genres from GTZAN dataset which contain about 10 genres. We have built a Convolutional Neural Network model using the tensorflow library to classify the 10 genres.  <h4>
 </p>
 
 ---
@@ -50,7 +50,7 @@
 
 ### GTZAN Model:
 #### Deep Learning Model : 
-<p> After pre-processing the dataset, we come to the part where we use concepts of Convolutional Neural Network to build and train a model that classifies the music genre. Using the Convolutional Neural Network Model which made use of features such as MFCC's,spectral centroids, extracted features are in features3sec.csv. </p>
+<p> After pre-processing the dataset, we come to the part where we use concepts of Convolutional Neural Network to build and train a model that classifies the music genre. Using the Convolutional Neural Network Model which made use of features such as MFCC's,spectral centroids, extracted features in features3sec.csv. </p>
 
 #### For the CNN model:
 	
