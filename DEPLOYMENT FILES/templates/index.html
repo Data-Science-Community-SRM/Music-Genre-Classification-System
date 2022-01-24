@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<title>Genrify </title>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesheet/index.css') }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<body>
+  
+    <header class="site__header">
+
+        <div class="grid">
+      
+          <div class="site__logo">
+      
+            <a href="/"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="34" viewBox="9 310.9 412 220">
+                <path fill="#fff" d="M29 430.9h-20v-20h20v20zm392-20h-20v20h20v-20zm-30.2-15h-20v50h20v-50zm-331.6 5h-20v40h20v-40zm30.1-10h-20v60h20v-60zm30.2-20h-20v100h20v-100zm30.1 20h-20v60h20v-60zm30.2-40h-20v140h20v-140zm30.1-40h-20v220h20v-220zm30.2 40h-20v140h20v-140zm30.1 30h-20v80h20v-80zm30.2 10h-20v60h20v-60zm30.1 10h-20v40h20v-40zm30.2-20h-20v80h20v-80z" />
+              </svg></a>
+      
+          </div>
+      
+          <nav class="navigation navigation--inline navigation--main">
+            
+          </nav>
+      
+        </div>
+      
+      </header>
+      
+      <main class="site__main">
+      
+        <section class="site__section site__section--start align text--center">
+      
+          <div class="grid">
+      
+            <div class="text-container">
+              <h1>Genrify</h1>
+              <h2>Hear it. Genrify it.</h2>
+      </div>
+       
+            <a href="#" class="button--scroll animation animation--infinite animation--up-down"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="-275 398.7 44.2 44.2">
+                <path fill="#fff" d="M-275 420.8c0-12.2 9.9-22.1 22.1-22.1s22.1 9.9 22.1 22.1c0 12.2-9.9 22.1-22.1 22.1s-22.1-9.9-22.1-22.1zm42.7 0c0-11.4-9.2-20.6-20.6-20.6-11.4 0-20.6 9.2-20.6 20.6 0 11.4 9.2 20.6 20.6 20.6 11.4 0 20.6-9.3 20.6-20.6zM-260.6 418c0-.2.1-.4.2-.5.3-.3.8-.3 1.1 0l6.8 6.8 6.8-6.8c.3-.3.8-.3 1.1 0 .3.3.3.8 0 1.1l-7.3 7.3c-.3.3-.8.3-1.1 0l-7.3-7.3c-.3-.2-.3-.4-.3-.6z" />
+              </svg></a>
+      
+          </div>
+      
+        </section>
+        
+      
+      </main>
+
+
+
+      
+      <div style="background-color: #1A1A40;">
+        <br>
+      <br>
+      <br>
+
+<p style="word-wrap: break-word;font-size: 30px; color:white; text-align: center; margin: 100px; font-family:poppins;">
+    This small web app uses a neural network to predict the genre of a song you upload.
+    The network can predict one of ten genres:
+    pop, metal, disco, blues, reggae, classical, rock, hip-hop, country, and jazz. 
+    <br>
+    <br> 
+    To use it, select a music file from your computer to be 
+    fed into the genre classifier, and then click the Predict button below. 
+    This app currently supports .wav file type.
+</p>
+
+<audio id="audio" controls>
+  Your browser does not support the audio element.</audio>
+<br />
+<br>
+<br>
+<form action="{{ url_for('predict')}}" method="post"  enctype="multipart/form-data">
+  <input class="custom-file-input glow-on-hover push " id="fileupload" type="file" name="UploadedAudio" accept=".ogg,.wav,.flac"/>
+
+  <button class="glow-on-hover"  type="submit", class="btn"> Predict </button>
+
+  <br>
+  <br>
+  <p style="word-wrap: break-word;font-size: 30px; color:white; text-align: center; margin: 50px; font-family:poppins;  ">Prediction : {{prediction_text}}</p>
+
+
+</form>
+<ul  id="fileList" class="drag-sort-enable">
+</ul>
+
+<div id="analyserOut">
+</div>
+<br>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<br>
+<br>
+</div>
+
+<div style="background-color: #1A1A40;"> 
+  <footer>
+    Made with ❤️ and 🎶 by DSC Community.
+  </footer></div>
+<script src="{{url_for('static', filename='stylesheet/script.js')}}"></script>
+<script>
+  
+  </script>
+</body>
