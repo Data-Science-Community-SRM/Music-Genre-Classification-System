@@ -67,6 +67,14 @@ The basic project architechture is given below:
 </p>	
 <br>
 
+## Preview
+<p align="center">
+<img src="https://github.com/Data-Science-Community-SRM/Music-Genre-Classification-System/blob/master/Images/Genrify.gif" width="800" height="400" />
+<br>
+<br>
+</p><br>	
+		
+	
 ## Instructions to run
 
 * Pre-requisites:
